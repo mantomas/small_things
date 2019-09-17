@@ -1,4 +1,5 @@
 import tkinter as tk
+import re
 
 class OneLine(tk.Tk):
     """
@@ -17,6 +18,11 @@ class OneLine(tk.Tk):
         self.replacement.pack()
         self.replacement = tk.Entry(self, width=20)
         self.replacement.pack()
+        # checkbar with other options
+        self.test = tk.BooleanVar() 
+        self.test.set(False)
+        self.choices = tk.Checkbutton(self, text="Remove multiple spaces", variable=self.test)
+        self.choices.pack()
         # exec button
         self.button = tk.Button(self, text="NO END", command=self.noEnd)
         self.button.pack()
@@ -33,8 +39,13 @@ class OneLine(tk.Tk):
         replaceCharacter = self.replacement.get()
         # reading the input with avoiding the last linebreak
         inputText = self.entry.get('1.0','end-1c')
+        # checking if multiple spaces are enabled
+        removeSpaces = self.test.get()
         # replacing line breaks
         outputText = inputText.replace("\n", replaceCharacter)
+        # removing multiple spaces if enabled
+        if removeSpaces == True:
+            outputText = re.sub(' +', ' ', outputText)
         # emptying output field before writing the result
         self.result.delete('1.0','end-1c')
         # writing output
