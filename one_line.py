@@ -18,10 +18,10 @@ class OneLine(tk.Tk):
         self.replacement.pack()
         self.replacement = tk.Entry(self, width=20)
         self.replacement.pack()
-        # checkbar with other options
-        self.test = tk.BooleanVar() 
-        self.test.set(False)
-        self.choices = tk.Checkbutton(self, text="Remove multiple spaces", variable=self.test)
+        # removing multiple spaces
+        self.multiSpace = tk.BooleanVar()
+        self.multiSpace.set(False)
+        self.choices = tk.Checkbutton(self, text="Remove multiple spaces", variable=self.multiSpace)
         self.choices.pack()
         # exec button
         self.button = tk.Button(self, text="NO END", command=self.noEnd)
@@ -40,14 +40,18 @@ class OneLine(tk.Tk):
         # reading the input with avoiding the last linebreak
         inputText = self.entry.get('1.0','end-1c')
         # checking if multiple spaces are enabled
-        removeSpaces = self.test.get()
+        removeSpaces = self.multiSpace.get()
+        # removing multiple consecutive linebreaks on empty lines
+        inputText = re.sub("\n+", '\n', inputText)
+        # replacing tabulators with single spaces
+        inputText = re.sub("\t", ' ', inputText)
         # replacing line breaks
         outputText = inputText.replace("\n", replaceCharacter)
         # removing multiple spaces if enabled
         if removeSpaces == True:
             outputText = re.sub(' +', ' ', outputText)
         # emptying output field before writing the result
-        self.result.delete('1.0','end-1c')
+        self.result.delete('1.0', 'end-1c')
         # writing output
         self.result.insert('1.0', outputText)
 
