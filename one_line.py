@@ -43,6 +43,9 @@ class OneLine(tk.Tk):
         removeSpaces = self.multiSpace.get()
         # removing multiple consecutive linebreaks on empty lines
         inputText = re.sub("\n+", '\n', inputText)
+        # removing linebreak at the end of string, if any
+        while inputText[-1] == "\n":
+            inputText = inputText[:-1]
         # replacing tabulators with single spaces
         inputText = re.sub("\t", ' ', inputText)
         # replacing line breaks
