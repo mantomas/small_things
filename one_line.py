@@ -1,12 +1,14 @@
 import tkinter as tk
 import re
 
+
 class OneLine(tk.Tk):
     """
     Simple app to remove line breaks
     and make just single line of text from input.
     """
-    def __init__(self): # Tkinter main window
+
+    def __init__(self):  # Tkinter main window
         tk.Tk.__init__(self)
         # window title
         self.title('One Line')
@@ -24,7 +26,7 @@ class OneLine(tk.Tk):
         self.choices = tk.Checkbutton(self, text="Remove multiple spaces", variable=self.multiSpace)
         self.choices.pack()
         # exec button
-        self.button = tk.Button(self, text="NO END", command=self.noEnd)
+        self.button = tk.Button(self, text="NO END", command=self.no_end)
         self.button.pack()
         # output field
         self.result = tk.Text(self, height=5, width=100)
@@ -32,41 +34,41 @@ class OneLine(tk.Tk):
         # button to quit the app
         self.button = tk.Button(self, text="exit", padx=20, command=self.destroy)
         self.button.pack(anchor="e")
-        
 
-    def noEnd(self): # function to remove line breaks
+    def no_end(self):  # function to remove line breaks
         # obtaining replacement string
-        replaceCharacter = self.replacement.get()
+        replace_character = self.replacement.get()
         # reading the input with avoiding the last linebreak
-        inputText = self.entry.get('1.0','end-1c')
+        input_text = self.entry.get('1.0', 'end-1c')
         # checking if multiple spaces are enabled
-        removeSpaces = self.multiSpace.get()
+        remove_spaces = self.multiSpace.get()
         # removing multiple consecutive linebreaks on empty lines
-        inputText = re.sub("\n+", '\n', inputText)
+        input_text = re.sub("\n+", '\n', input_text)
         # removing linebreak and tabulator at the beginning of string, if any and avoiding only linebreak input
-        if len(inputText) > 0:
-            while inputText[0] == "\n" or inputText[0] == "\t":
-                inputText = inputText[1:]
-                if len(inputText) < 1:
+        if len(input_text) > 0:
+            while input_text[0] == "\n" or input_text[0] == "\t":
+                input_text = input_text[1:]
+                if len(input_text) < 1:
                     break
         # removing linebreak and tabulator at the end of string, if any and avoiding only linebreak input
-        if len(inputText) > 0:
-            while inputText[-1] == "\n" or inputText[-1] == "\t":
-                inputText = inputText[:-1]
-                if len(inputText) < 1:
+        if len(input_text) > 0:
+            while input_text[-1] == "\n" or input_text[-1] == "\t":
+                input_text = input_text[:-1]
+                if len(input_text) < 1:
                     break
         # replacing tabulators with single spaces
-        inputText = re.sub("\t", ' ', inputText)
+        input_text = re.sub("\t", ' ', input_text)
         # replacing line breaks
-        outputText = inputText.replace("\n", replaceCharacter)
+        output_text = input_text.replace("\n", replace_character)
         # removing multiple spaces if enabled
-        if removeSpaces == True:
-            outputText = re.sub(' +', ' ', outputText)
+        if remove_spaces is True:
+            output_text = re.sub(' +', ' ', output_text)
         # emptying output field before writing the result
         self.result.delete('1.0', 'end-1c')
         # writing output
-        self.result.insert('1.0', outputText)
+        self.result.insert('1.0', output_text)
 
-#initializing the main loop
+
+# initializing the main loop
 app = OneLine()
 app.mainloop()
