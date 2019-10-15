@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 import tkinter as tk
 import re
 
@@ -68,6 +69,9 @@ class OneLine(tk.Tk):
         self.result.delete('1.0', 'end-1c')
         # writing output
         self.result.insert('1.0', output_text)
+        # copy result in clipboard
+        self.clipboard_clear()
+        self.clipboard_append(output_text)
 
 
 # initializing the main loop
