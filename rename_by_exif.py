@@ -13,7 +13,7 @@ def set_directory() -> str:
     '''
     path_find = tk.Tk()
     path_find.withdraw()
-    path = tk.filedialog.askdirectory() + "/"
+    path = tk.filedialog.askdirectory() # + "/"
     return path
 
 def exif_date_time(file_path: str) -> str:
@@ -33,8 +33,8 @@ def exif_date_time(file_path: str) -> str:
 
 def exif_rename(folder_path: str, jpg: str, datetime: str):
     '''rename one JPG file'''
-    src = folder_path + jpg # old filename path
-    dst = folder_path + datetime + ".jpg"
+    src = os.path.join(folder_path, jpg) # old filename path
+    dst = os.path.join(folder_path, datetime + ".jpg")
     os.rename(src, dst)
 
 
@@ -47,35 +47,38 @@ if __name__ == "__main__":
     files_list_clear = [] # only JPG's
     folder_path = set_directory() # call for folder selection dialogue
     files_list = os.listdir(folder_path) # list files in directory
-    # clear list - only JPG files
-    for file in files_list: 
-        try:
-            extension = file[file.rindex("."):]
-            if extension.lower() in isJpg:
-                files_list_clear.append(file)
-        except ValueError:
-            continue
-    # rename files if EXIF datetime find
-    for jpg in files_list_clear:
-        datetime = exif_date_time(folder_path + jpg)
-        # skip no exif files
-        if datetime == False: 
-            passed += 1
-            pass
-        # skip exif duplicity images (edited versions etc...)
-        elif os.path.isfile(folder_path + datetime + ".jpg") == True:
-            duplicity += 1
-            pass
-        # if all clear, rename file
-        else: 
-            exif_rename(folder_path, jpg, datetime)
-            processed += 1
-           
-    # final report
-    if processed > 0:
-        print("Images renamed: " + str(processed))
-        print("Images skiped: " + str(passed))
-        if duplicity > 0:
-            print("There was " + str(duplicity) + " skiped images alredy renamed or the same exif datetime_origin")
+    if len(files_list) == 0:
+        print("Empty directory")
     else:
-        print("No images out of " + str(len(files_list)) + " processed - already exists or missing exif.")
+        # clear list - only JPG files
+        for file in files_list: 
+            try:
+                extension = file[file.rindex("."):]
+                if extension.lower() in isJpg:
+                    files_list_clear.append(file)
+            except ValueError:
+                continue
+        # rename files if EXIF datetime find
+        for jpg in files_list_clear:
+            datetime = exif_date_time(os.path.join(folder_path, jpg))
+            # skip no exif files
+            if datetime == False: 
+                passed += 1
+                pass
+            # skip exif duplicity images (edited versions etc...)
+            elif os.path.isfile(os.path.join(folder_path, datetime + ".jpg")) == True:
+                duplicity += 1
+                pass
+            # if all clear, rename file
+            else: 
+                exif_rename(folder_path, jpg, datetime)
+                processed += 1
+               
+        # final report
+        if processed > 0:
+            print("Images renamed: " + str(processed))
+            print("Files skiped: " + str(passed))
+            if duplicity > 0:
+                print("There was " + str(duplicity) + " skiped images \nEXIF match, missing or file exist.")
+        else:
+            print("No files out of " + str(len(files_list)) + " processed. \nEXIF match, missing or file exist.")
