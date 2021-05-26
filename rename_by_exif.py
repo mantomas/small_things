@@ -14,7 +14,11 @@ def set_directory() -> str:
     path_find = tk.Tk()
     path_find.withdraw()
     path = tk.filedialog.askdirectory() # + "/"
-    return path
+    if path == False:
+        print("No directory selected!")
+        return False
+    else:
+        return path
 
 def exif_date_time(file_path: str) -> str:
     '''retrieve EXIF informations from file
@@ -47,7 +51,9 @@ if __name__ == "__main__":
     files_list_clear = [] # only JPG's
     folder_path = set_directory() # call for folder selection dialogue
     files_list = os.listdir(folder_path) # list files in directory
-    if len(files_list) == 0:
+    if files_list == False:
+        pass
+    elif len(files_list) == 0:
         print("Empty directory")
     else:
         # clear list - only JPG files
