@@ -29,7 +29,10 @@ class OneLine(tk.Tk):
         self.entry = ScrolledText(self, height=10, width=100)
         self.entry.pack(fill=BOTH, expand=True)
 
-        self.replacement = tk.Label(self, text="End of line replacement:", width=100)
+        self.replacement = tk.Label(self,
+                                    text="End of line replacement:",
+                                    width=100
+                                    )
         self.replacement.pack()
         self.replacement = tk.Entry(self, width=20)
         self.replacement.pack()
@@ -54,7 +57,10 @@ class OneLine(tk.Tk):
         )
         self.button.pack()
 
-        self.button = tk.Button(self, text="exit", padx=20, command=self.destroy)
+        self.button = tk.Button(self,
+                                text="exit",
+                                padx=20,
+                                command=self.destroy)
         self.button.pack(anchor="e")
 
     def no_break(self):
