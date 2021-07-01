@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 # script to rename images in selected folder according to EXIF datetime_origin
 
+import os
+import sys
 from exif import Image  # external library - pip3 install exif
 import tkinter as tk
 from tkinter import filedialog
-import os
+
 
 
 def set_directory() -> str:
@@ -19,7 +21,7 @@ def set_directory() -> str:
         return path
 
     print("No directory selected!")
-    return False
+    sys.exit()
 
 
 def exif_date_time(file_path: str) -> str:
