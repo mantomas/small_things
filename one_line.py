@@ -76,10 +76,12 @@ class OneLine(tk.Tk):
 
         # processing - tabs to spaces
         input_text = [re.sub("\t+", " ", line.strip()) for line in input_text]
+        # will remove consecutive spaces if set so
         input_text = [
             re.sub(" +", " ", line.strip()) if remove_spaces else line.strip()
             for line in input_text
-        ]
+            ]
+        # remove empty lines
         input_text = [line for line in input_text if line != ""]
 
         # joining to one line
