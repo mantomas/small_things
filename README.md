@@ -9,6 +9,3 @@ Rename images in selected directory by [EXIF](https://exif.readthedocs.io/en/lat
 ## one-line.py
 Simple line-break remover. Uses Tkinter as GUI, nothing fancy. You can choose a string to replace line-breaks or decide if you want to remove multiple spaces.
 ![one_line.png](img/one_line.png)
-
-## stars.py
-Short code to draw given number of "stars" using turtle graphics - with random size, shape and position. Just for fun.
