@@ -1,18 +1,23 @@
 #!/usr/bin/env python3
-# script to rename images in selected folder according to EXIF datetime_origin
+"""
+script to rename images in selected folder according to EXIF datetime_origin
+
+depend on: 'exif' - pip3 install exif
+usage: python3 rename_by_exif.py
+"""
 
 import os
 import sys
 import tkinter as tk
 from datetime import datetime
-from exif import Image  # external library - pip3 install exif
+from exif import Image
 from tkinter import filedialog
 
 
 def set_directory() -> str:
     """tkinter dialogue to select directory for processing
 
-    retur directory path as a string
+    return directory path as a string
     """
     path_find = tk.Tk()
     path_find.withdraw()
@@ -28,7 +33,7 @@ def exif_date_time(file_path: str) -> str:
     """retrieve EXIF informations from file
 
     return string in format: YYYY-mm-dd_HHMMSS
-    return False if not image or missing exif
+    return "missing exif" if not image or EXIF is missing
     """
     with open(file_path, "rb") as image_file:
         my_image = Image(image_file)
