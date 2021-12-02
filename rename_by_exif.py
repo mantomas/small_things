@@ -30,17 +30,20 @@ def exif_date_time(file_path: str) -> str:
     return string in format: YYYY-mm-dd_HHMMSS
     return False if not image or missing exif
     """
-    try:
-        with open(file_path, "rb") as image_file:
-            my_image = Image(image_file)
-            exD = datetime.strptime(my_image.datetime_original, "%Y:%m:%d %H:%M:%S")
+    with open(file_path, "rb") as image_file:
+        my_image = Image(image_file)
+        try:
+            exD = datetime.strptime(
+                my_image.datetime_original,
+                "%Y:%m:%d %H:%M:%S"
+                )
             exif_date_time = datetime.strftime(exD, "%Y-%m-%d_%H%M%S")
             return exif_date_time
-    except Exception:
-        return False
+        except ValueError:
+            return "missing exif"
 
 
-def exif_rename(folder_path: str, jpg: str, datetime: str):
+def exif_rename(folder_path: str, jpg: str, datetime: str) -> None:
     """rename one JPG file"""
     src = os.path.join(folder_path, jpg)  # old filename path
     dst = os.path.join(folder_path, datetime + ".jpg")
@@ -70,7 +73,7 @@ if __name__ == "__main__":
         for jpg in files_list_clear:
             date_time = exif_date_time(os.path.join(folder_path, jpg))
             # skip no exif files
-            if date_time is False:
+            if date_time == "missing exif":
                 passed += 1
                 pass
             # skip exif duplicity images (edited versions etc...)
