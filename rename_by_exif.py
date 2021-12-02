@@ -92,17 +92,15 @@ if __name__ == "__main__":
 
         # final report
         if processed > 0:
-            print("Images renamed: " + str(processed))
-            print("Files skiped: " + str(passed))
+            print(f"Images renamed: {str(processed)}")
+            print(f"Files skiped: {str(passed)}")
             if duplicity > 0:
                 print(
-                    "There was "
-                    + str(duplicity)
-                    + " skiped images \nEXIF match, missing or file exist."
+                    f"There was {str(duplicity)} skiped file \n"
+                    "EXIF match, missing or file exist."
                 )
         else:
             print(
-                "No files out of "
-                + str(len(files_list))
-                + " processed. \nEXIF match, missing or file exist."
+                f"No files out of {str(len(files_list))} processed.\n"
+                "EXIF match, missing or file exist."
             )
