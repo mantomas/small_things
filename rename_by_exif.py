@@ -82,7 +82,7 @@ if __name__ == "__main__":
                 passed += 1
                 pass
             # skip exif duplicity images (edited versions etc...)
-            elif os.path.isfile(os.path.join(folder_path, date_time + ".jpg")) is True:
+            elif os.path.isfile(os.path.join(folder_path, date_time + ".jpg")):
                 duplicity += 1
                 pass
             # if all clear, rename file
