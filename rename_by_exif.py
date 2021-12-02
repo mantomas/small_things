@@ -21,7 +21,7 @@ def set_directory() -> str:
     """
     path_find = tk.Tk()
     path_find.withdraw()
-    path = tk.filedialog.askdirectory()
+    path = filedialog.askdirectory()
     if path:
         return path
 
