@@ -39,7 +39,7 @@ def exif_date_time(file_path: str) -> str:
                 )
             exif_date_time = datetime.strftime(exD, "%Y-%m-%d_%H%M%S")
             return exif_date_time
-        except ValueError:
+        except AttributeError:
             return "missing exif"
 
 
