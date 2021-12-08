@@ -31,7 +31,7 @@ class OneLine(tk.Tk):
 
     def __init__(self):
         """OneLine class constructor"""
-        tk.Tk.__init__(self)
+        super().__init__()
         #  window title
         self.title("One Line")
         #  text input field
